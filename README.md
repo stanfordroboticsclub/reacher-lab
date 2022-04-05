@@ -1,5 +1,5 @@
 # Pupper Sim
-Simulation and Reinforcement Learning for DJI Pupper v2 Robot
+Simulation and Reinforcement Learning for Reacher Robot
 
 ## System setup
 ### Operating system requirements
