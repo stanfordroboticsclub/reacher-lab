@@ -17,8 +17,8 @@ def calculate_forward_kinematics_robot(joint_angles):
     x2 = -L2 * math.sin(joint_angles[1] + joint_angles[2])
     z2 = L2 * math.cos(joint_angles[1] + joint_angles[2])
 
-    foot_pos = np.array([[HIP_OFFSET],
-                        [x1 + x2], 
+    foot_pos = np.array([[x1 + x2],
+                        [-HIP_OFFSET], 
                         [z1 + z2]
                         ])
 

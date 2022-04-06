@@ -109,7 +109,7 @@
       <parent link="leftFrontUpperLeg"/>
       <child link="leftFrontLowerLeg"/>
       <axis xyz="-1.0 0 0"/>
-      <limit lower="-6" upper="6" effort="0" velocity="0"/>
+      <limit lower="-10" upper="10" effort="0" velocity="0"/>
     </joint>
 
     <joint name="leftFrontToe" type="floating">
@@ -123,15 +123,15 @@
       <parent link="leftFrontLeg"/>
       <child link="leftFrontUpperLeg"/>
       <axis xyz="1.0 0 0"/>
-      <limit lower="-0.8" upper="6" effort="0" velocity="0"/>
+      <limit lower="-10" upper="10" effort="0" velocity="0"/>
     </joint>
 
     <joint name="baseMotor" type="revolute">
-      <origin xyz="0 0 -0.025" rpy="1.5708 0 0"/>
+      <origin xyz="0 0 -0.025" rpy="1.5708 0 -1.5708"/>
       <parent link="base"/>
       <child link="leftFrontLeg"/>
       <axis xyz="0 -1.0 0"/>
-      <limit lower="-6" upper="6" effort="0" velocity="0"/>
+      <limit lower="-10" upper="10" effort="0" velocity="0"/>
     </joint>
 
     <material name="PupperMaterial">

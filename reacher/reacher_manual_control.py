@@ -15,9 +15,9 @@ flags.DEFINE_bool("run_on_robot", False, "Whether to run on robot or in simulati
 FLAGS = flags.FLAGS
 import pybullet_data
 
-KP = 8.0
-KD = 0.8
-MAX_CURRENT = 6.0
+KP = 8.0 # A/rad (1/1000x relative to lab 1/2)
+KD = 0.8 # A/(rad/s) (1/1000x relative to lab 1/2)
+MAX_CURRENT = 6.0 # A (not mA as in lab 1/2)
 
 HIP_OFFSET = 0.0335
 L1 = 0.08
@@ -47,7 +47,7 @@ def main(argv):
   p.setPhysicsEngineParameter(numSolverIterations=10) # Affects performance?
   p.changeDynamics(reacher, -1, linearDamping=0, angularDamping=0)
 
-  
+
   for j in range(p.getNumJoints(reacher)):
     p.changeDynamics(reacher, j, linearDamping=0, angularDamping=0)
     info = p.getJointInfo(reacher, j)
