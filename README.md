@@ -30,7 +30,12 @@ pip install -e .
 ```
 Then to verify the installation, run
 ```bash
-python3 reacher/reacher_env_example.py
+python3 reacher/reacher_manual_control.py
 ```
 You should see the PyBullet GUI pop up and see Reacher doing an exercise.
+
+Run this to run code simultaneously on robot. 
+```bash
+python3 reacher/reacher_manual_control.py --run_on_robot
+```
 <br/>
