@@ -1,4 +1,4 @@
-# Pupper Sim
+# Reacher Sim
 Simulation and Reinforcement Learning for Reacher Robot
 
 ## System setup
