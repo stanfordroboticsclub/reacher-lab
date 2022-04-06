@@ -47,6 +47,7 @@ def main(argv):
   p.setPhysicsEngineParameter(numSolverIterations=10) # Affects performance?
   p.changeDynamics(reacher, -1, linearDamping=0, angularDamping=0)
 
+  
   for j in range(p.getNumJoints(reacher)):
     p.changeDynamics(reacher, j, linearDamping=0, angularDamping=0)
     info = p.getJointInfo(reacher, j)
@@ -63,22 +64,23 @@ def main(argv):
       serial_port = next(list_ports.grep("usbmodem")).device
     hardware_interface = interface.Interface(serial_port)
     time.sleep(0.25)
+
+    # Set robot arm PD gains.
     hardware_interface.set_joint_space_parameters(
         kp=KP, kd=KD, max_current=MAX_CURRENT)
 
   p.setRealTimeSimulation(1)
-  counter = 0
   while (1):
-    counter += 1
     joint_angles = np.zeros(3)
 
-    # Read 
+    # Read angles from pybullet sliders and set joint angles of simulated arm
     for i in range(len(param_ids)):
       c = param_ids[i]
       target_pos = p.readUserDebugParameter(c)
       joint_angles[i] = target_pos
       p.setJointMotorControl2(reacher, joint_ids[i], p.POSITION_CONTROL, target_pos, force=20.)
 
+    # Command actual robot
     if run_on_robot:
       full_actions = np.zeros([3, 4])
       full_actions[:, 3] = np.reshape(joint_angles, 3)
