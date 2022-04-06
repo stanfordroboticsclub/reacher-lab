@@ -1,3 +1,53 @@
+Why are you looking at the solutions? 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+You're still looking!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def calculate_forward_kinematics_robot(joint_angles):
     """Calculate xyz coordinates of end-effector given joint angles.
 

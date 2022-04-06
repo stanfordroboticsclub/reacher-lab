@@ -28,13 +28,20 @@ git clone https://github.com/stanfordroboticsclub/reacher-lab.git
 cd reacher-lab
 pip install -e .
 ```
-Then to verify the installation, run
+
+## Running simulation on computer
 ```bash
-python3 reacher/reacher_manual_control.py
+python reacher/reacher_manual_control.py
 ```
 You should see the PyBullet GUI pop up and see Reacher doing an exercise.
 
-Run this to run code simultaneously on robot. 
+## Deploying to robot
+Upload our firmware to the Teensy:
+1) Open vscode and upload your lab 1 / 2 code. The Teensy application should open in the background.
+2) Click the open hex file button in the application window (left side) and choose the `firmware.hex` file in this folder.
+3) Then click program.
+
+Then run the python code:
 ```bash
 python3 reacher/reacher_manual_control.py --run_on_robot
 ```
