@@ -17,15 +17,15 @@ If you already have the tools installed you'll get an error saying so, which you
 ### Conda setup
 Install [miniconda](https://docs.conda.io/en/latest/miniconda.html), then
 ```
-conda create --name rl_pupper python=3.7
-conda activate rl_pupper
+conda create --name reacher python=3.8
+conda activate reacher
 pip install ray arspb
 ```
 
 ## Getting the code ready
 ```bash
 git clone https://github.com/stanfordroboticsclub/reacher-lab.git
-cd puppersim
+cd reacher-lab
 pip install -e .
 ```
 Then to verify the installation, run
