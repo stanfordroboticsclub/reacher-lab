@@ -36,12 +36,15 @@ python reacher/reacher_manual_control.py
 You should see the PyBullet GUI pop up and see Reacher doing an exercise.
 
 ## Deploying to robot
-Upload our firmware to the Teensy:
-1) Open vscode and upload your lab 1 / 2 code. The Teensy application should open in the background.
-2) Click the open hex file button in the application window (left side) and choose the `firmware.hex` file in this folder.
-3) Then click program.
+### Upload reacher lab firmware to Teensy
+1. Open vscode and upload your lab 1 / 2 code. The Teensy application should open in the background.
 
-Then run the python code:
+2. Click the open hex file button in the application window (left side) and choose the `firmware.hex` file in this folder.
+
+3. Then click program.
+
+### Run simulator and robot simultaneously
+Run the python code:
 ```bash
 python3 reacher/reacher_manual_control.py --run_on_robot
 ```
