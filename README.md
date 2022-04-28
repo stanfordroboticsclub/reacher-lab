@@ -39,9 +39,11 @@ You should see the PyBullet GUI pop up and see Reacher doing an exercise.
 ### Upload reacher lab firmware to Teensy
 1. Open vscode and upload your lab 1 / 2 code. The Teensy application should open in the background.
 
-2. Click the open hex file button in the application window (left side) and choose the `firmware.hex` file in this folder.
+2. Click the open hex file button in the application window (left side) and choose the `firmware.hex` THAT'S IN THIS FOLDER (not from the lab 1/2 code).
 
-3. Then click program.
+3. Click the green auto button if it's not already highlighted
+
+4. Press the button on the Teensy to program it with the hex file
 
 ### Run simulator and robot simultaneously
 Run the python code:
