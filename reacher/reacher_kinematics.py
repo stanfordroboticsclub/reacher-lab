@@ -72,6 +72,7 @@ def calculate_inverse_kinematics(end_effector_pos, guess):
       guess: Guess at joint angles that achieve desired end-effector position. Numpy array of 3 elements.
     Returns:
       Joint angles that correspond to given desired end-effector position. Numpy array with 3 elements.
+      Returns None when IK times out because the end-effector position is infeasible.
     """
     # TODO for students: Implement this function. ~10-20 lines of code.
     joint_angles = np.array([0.0, 0.0, 0.0])

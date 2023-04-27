@@ -33,7 +33,13 @@ pip install -e .
 ```bash
 python reacher/reacher_manual_control.py
 ```
-You should see the PyBullet GUI pop up and see Reacher doing an exercise.
+You should see the PyBullet GUI pop up and see Reacher following the joint positions set by the sliders.
+
+## Running with inverse kinematics
+```bash
+python3 reacher/reacher_manual_control.py --ik
+```
+Assuming you have implemented all the functions inside of `reacher_kinematics.py` according to their documentation, you can run the above command to enable Cartesian control of the robot. Be slow with the sliders as the leg has a very limited range for where it can be. You will see that sometimes the leg starts jerking because it is unable to find a suitable solution for the given XYZ coordinate.
 
 ## Deploying to robot
 ### Upload reacher lab firmware to Teensy
@@ -50,4 +56,9 @@ Run the python code:
 ```bash
 python3 reacher/reacher_manual_control.py --run_on_robot
 ```
+to do joint control of one leg and
+```bash
+python3 reacher/reacher_manual_control.py --run_on_robot --ik
+```
+to do Cartesian control of the leg.
 <br/>
