@@ -11,6 +11,7 @@ from sys import platform
 
 flags.DEFINE_bool("run_on_robot", False,
                   "Whether to run on robot or in simulation.")
+flags.DEFINE_bool("ik", False, "Whether to control arms through cartesian coordinates(IK) or joint angles")
 FLAGS = flags.FLAGS
 
 KP = 5.0  # Amps/rad
@@ -46,6 +47,8 @@ def main(argv):
   p.setRealTimeSimulation(1)
   counter = 0
   last_command = time.time()
+  enable = True
+  joint_angles = np.zeros(6)
 
   # Use this function to disable/enable certain motors. The first six elements
   # determine activation of the motors attached to the front of the PCB, which
@@ -61,35 +64,57 @@ def main(argv):
     if time.time() - last_command > UPDATE_DT:
       last_command = time.time()
       counter += 1
-      joint_angles = np.zeros(6)
+
+      slider_angles = np.zeros_like(joint_angles)
       for i in range(len(param_ids)):
         c = param_ids[i]
         targetPos = p.readUserDebugParameter(c)
-        joint_angles[i] = targetPos
+        slider_angles[i] = targetPos
+
+      # If IK is enabled, update joint angles based off of goal XYZ position
+      if FLAGS.ik:
+          xyz = []
+          for i in range(len(param_ids), len(param_ids) + 3):
+            xyz.append(p.readUserDebugParameter(i))
+          xyz = np.asarray(xyz)
+          ret = reacher_kinematics.calculate_inverse_kinematics(xyz, joint_angles[:3])
+          if ret is None:
+            enable = False
+          else:
+            # Wraps angles between -pi, pi
+            joint_angles[:3] = np.arctan2(np.sin(ret), np.cos(ret))
+            joint_angles[3:] = slider_angles[3:]
+            enable = True
+      else:
+        joint_angles = slider_angles
+
+      for i in range(len(joint_ids)):
         p.setJointMotorControl2(reacher,
                                 joint_ids[i],
                                 p.POSITION_CONTROL,
-                                targetPos,
+                                joint_angles[i],
                                 force=2.)
 
-      if run_on_robot:
+      if run_on_robot and enable:
         full_actions = np.zeros([3, 4])
-        full_actions[:, 3] = np.reshape(joint_angles, -1)[:3]
-        full_actions[:, 2] = np.reshape(joint_angles, -1)[3:]
+        # TODO: Update order & signs for your own robot/motor configuration like below
+        # left_angles = [-joint_angles[1], -joint_angles[0], joint_angles[2]]
+        # right_angles = [-joint_angles[5], joint_angles[4], -joint_angles[3]]
+        left_angles = joint_angles[:3]
+        right_angles = joint_angles[3:]
+        full_actions[:, 3] = left_angles
+        full_actions[:, 2] = right_angles
 
-        hardware_interface.set_actuator_postions(np.array(full_actions))
+        hardware_interface.set_actuator_postions(full_actions)
         # Actuator positions are stored in array: hardware_interface.robot_state.position,
         # Actuator velocities are stored in array: hardware_interface.robot_state.velocity
 
-      end_effector_pos = reacher_kinematics.calculate_forward_kinematics_robot(
-          joint_angles[:3])
+      end_effector_pos = reacher_kinematics.calculate_forward_kinematics_robot(joint_angles[:3])
       p.resetBasePositionAndOrientation(sphere_id,
                                         posObj=end_effector_pos,
                                         ornObj=[0, 0, 0, 1])
 
-      if counter % 5 == 0:
-        print(
-            reacher_kinematics.calculate_forward_kinematics_robot(joint_angles[:3]))
-
+      if counter % 20 == 0:
+        print("Joint angles:", joint_angles, "Position:", end_effector_pos)
 
 app.run(main)

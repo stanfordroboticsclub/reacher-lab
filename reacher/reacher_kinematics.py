@@ -90,6 +90,7 @@ def calculate_inverse_kinematics(end_effector_pos, guess):
       This is our previous ik estimate of joint angles
     Returns:
       Joint angles that correspond to given desired end-effector position. Numpy array with 3 elements.
+      Returns None when IK times out because the end-effector position is infeasible.
     """
     # TODO: write a loop to iteratively update the joint angles until the loss is below TOLERANCE\
 
